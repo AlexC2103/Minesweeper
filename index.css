@@ -1,0 +1,35 @@
+body {
+  background-color: gray;
+  align-items: center;
+}
+.gameDifficulty {
+  vertical-align: top;
+  width: 150px;
+  height: 75px;
+  text-align: center;
+  color: black;
+  border-radius: 20%;
+  border: none;
+  font-size: 20px;
+  font-family: cursive;
+}
+.gameDifficulty:hover {
+  background-color: orange;
+  color: white;
+}
+.gameDifficulty {
+  transition-duration: 0.4s;
+}
+
+.boardButton {
+  vertical-align: top;
+  margin-top: -2px;
+  align: center;
+  width: 40px;
+  height: 40px;
+  border-color: gray;
+  border-width: thin;
+}
+.boardButton:disabled {
+  color: gray;
+}
