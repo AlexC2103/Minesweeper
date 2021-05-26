@@ -145,6 +145,7 @@ function gameCheck(clickedId, difficulty) {
     gameMatrix[line][column] = 'disabled';
 
     /// Conditions to highlight the block outline cells
+    /// up, down, right, left
     if (line > 0 && gameMatrix[line - 1][column] !== 0 && gameMatrix[line - 1][column] !== 'disabled') {
       document.getElementById(clickedCellId - boardSize).innerHTML = gameMatrix[line - 1][column];
     }
@@ -160,7 +161,22 @@ function gameCheck(clickedId, difficulty) {
     if (column > 0 && gameMatrix[line][column - 1] !== 0 && gameMatrix[line][column - 1] !== 'disabled') {
       document.getElementById(clickedCellId - 1).innerHTML = gameMatrix[line][column - 1];
     }
+    /// Diagonals: upper-left, upper-right, lower left, lower right
+    if (column > 0 && line > 0 && gameMatrix[line - 1][column - 1] !== 0 && gameMatrix[line - 1][column - 1] !== 'disabled') {
+      document.getElementById(clickedCellId - boardSize - 1).innerHTML = gameMatrix[line - 1][column - 1];
+    }
 
+    if (column < boardSize - 1 && line > 0 && gameMatrix[line - 1][column + 1] !== 0 && gameMatrix[line - 1][column + 1] !== 'disabled') {
+      document.getElementById(clickedCellId - boardSize + 1).innerHTML = gameMatrix[line - 1][column + 1];
+    }
+
+    if (column > 0 && line < boardSize - 1 && gameMatrix[line + 1][column - 1] !== 0 && gameMatrix[line + 1][column - 1] !== 'disabled') {
+      document.getElementById(clickedCellId + boardSize - 1).innerHTML = gameMatrix[line + 1][column - 1];
+    }
+
+    if (column < boardSize - 1 && line < boardSize - 1 && gameMatrix[line + 1][column + 1] !== 0 && gameMatrix[line + 1][column + 1] !== 'disabled') {
+      document.getElementById(clickedCellId + boardSize + 1).innerHTML = gameMatrix[line + 1][column + 1];
+    }
     /// Recursion for opening a mine-free block
     if (column + 1 <= boardSize - 1 && gameMatrix[line][column + 1] === 0) {
       gameCheck((clickedCellId + 1).toString(), difficulty);
