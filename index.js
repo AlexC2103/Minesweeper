@@ -85,7 +85,7 @@ function defineCells(difficulty) {
     for (var j = 0; j < difficulty; ++j) {
       if (gameMatrix[i][j] !== 'mine') {
         //Upper cell line
-        if ((i - 1 >= 0) && gameMatrix[i - 1][j] === 'mine') {
+        if ((i > 0) && gameMatrix[i - 1][j] === 'mine') {
           gameMatrix[i][j]++;
         }
 
@@ -119,7 +119,6 @@ function defineCells(difficulty) {
           gameMatrix[i][j]++;
         }
       }
-
     }
   }
 }
@@ -135,62 +134,48 @@ function gameCheck(clickedId, difficulty) {
 
   var line = parseInt((clickedCellId - 1) / boardSize);
   var column = clickedCellId - line * boardSize - 1;
+
   if (gameMatrix[line][column] === 'mine') {
     revealMines(boardSize);
+
   } else if (gameMatrix[line][column] !== 0) {
     document.getElementById(clickedCellId).innerHTML = gameMatrix[line][column];
   } else {
 
     document.getElementById(clickedCellId).disabled = true;
-    gameMatrix[line][column] = 'disabled';
+    gameMatrix[line][column] = 'null';
 
-    /// Conditions to highlight the block outline cells
-    /// up, down, right, left
-    if (line > 0 && gameMatrix[line - 1][column] !== 0 && gameMatrix[line - 1][column] !== 'disabled') {
-      document.getElementById(clickedCellId - boardSize).innerHTML = gameMatrix[line - 1][column];
-    }
-
-    if (line < boardSize - 1 && gameMatrix[line + 1][column] !== 0 && gameMatrix[line + 1][column] !== 'disabled') {
-      document.getElementById(clickedCellId + boardSize).innerHTML = gameMatrix[line + 1][column];
-    }
-
-    if (column < boardSize - 1 && gameMatrix[line][column + 1] !== 0 && gameMatrix[line][column + 1] !== 'disabled') {
-      document.getElementById(clickedCellId + 1).innerHTML = gameMatrix[line][column + 1];
-    }
-
-    if (column > 0 && gameMatrix[line][column - 1] !== 0 && gameMatrix[line][column - 1] !== 'disabled') {
-      document.getElementById(clickedCellId - 1).innerHTML = gameMatrix[line][column - 1];
-    }
-    /// Diagonals: upper-left, upper-right, lower left, lower right
-    if (column > 0 && line > 0 && gameMatrix[line - 1][column - 1] !== 0 && gameMatrix[line - 1][column - 1] !== 'disabled') {
-      document.getElementById(clickedCellId - boardSize - 1).innerHTML = gameMatrix[line - 1][column - 1];
-    }
-
-    if (column < boardSize - 1 && line > 0 && gameMatrix[line - 1][column + 1] !== 0 && gameMatrix[line - 1][column + 1] !== 'disabled') {
+    //Revealing diagonals of the disabled/null cells
+    if (line > 0 && column < boardSize - 1) {
       document.getElementById(clickedCellId - boardSize + 1).innerHTML = gameMatrix[line - 1][column + 1];
     }
 
-    if (column > 0 && line < boardSize - 1 && gameMatrix[line + 1][column - 1] !== 0 && gameMatrix[line + 1][column - 1] !== 'disabled') {
+    if (line > 0 && column > 0) {
+      document.getElementById(clickedCellId - boardSize - 1).innerHTML = gameMatrix[line - 1][column - 1];
+    }
+
+    if (line < boardSize - 1 && column < boardSize - 1) {
+      document.getElementById(clickedCellId + boardSize + 1).innerHTML = gameMatrix[line + 1][column + 1];
+    }
+
+    if (line < boardSize - 1 && column > 0) {
       document.getElementById(clickedCellId + boardSize - 1).innerHTML = gameMatrix[line + 1][column - 1];
     }
 
-    if (column < boardSize - 1 && line < boardSize - 1 && gameMatrix[line + 1][column + 1] !== 0 && gameMatrix[line + 1][column + 1] !== 'disabled') {
-      document.getElementById(clickedCellId + boardSize + 1).innerHTML = gameMatrix[line + 1][column + 1];
-    }
     /// Recursion for opening a mine-free block
-    if (column + 1 <= boardSize - 1 && gameMatrix[line][column + 1] === 0) {
+    if (column < boardSize - 1) {
       gameCheck((clickedCellId + 1).toString(), difficulty);
     }
 
-    if (column > 0 && gameMatrix[line][column - 1] === 0) {
+    if (column > 0) {
       gameCheck((clickedCellId - 1).toString(), difficulty);
     }
 
-    if (line > 0 && gameMatrix[line - 1][column] === 0) {
+    if (line > 0) {
       gameCheck((clickedCellId - boardSize).toString(), difficulty);
     }
 
-    if (line < boardSize - 1 && gameMatrix[line + 1][column] === 0) {
+    if (line < boardSize - 1) {
       gameCheck((clickedCellId + boardSize).toString(), difficulty);
     }
   }
