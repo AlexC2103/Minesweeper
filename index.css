@@ -22,6 +22,7 @@ body {
 }
 
 .boardButton {
+  background-color: #dbdbdb;
   vertical-align: top;
   margin-top: -2px;
   align: center;
@@ -29,7 +30,7 @@ body {
   height: 40px;
   border-color: gray;
   border-width: thin;
-  font-size: 25px;
+  font-size: 30px;
 }
 .boardButton:disabled {
   background-color: #c4c4c4;
