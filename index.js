@@ -182,38 +182,9 @@ function flagStatus(clickedCellId) {
 
 function colorCell(clickedCellId) {
 
+  var cellColors = ['', 'blue', '#108700', 'red', '#06005e', '#913a00', '#008a88', 'black', 'gray'];
   var line = parseInt((clickedCellId - 1) / boardSize);
   var column = clickedCellId - line * boardSize - 1;
 
-  if (gameMatrix[line][column] === 1) {
-    document.getElementById(clickedCellId).style.color = 'blue';
-  }
-
-  if (gameMatrix[line][column] === 2) {
-    document.getElementById(clickedCellId).style.color = '#108700';
-  }
-
-  if (gameMatrix[line][column] === 3) {
-    document.getElementById(clickedCellId).style.color = 'red';
-  }
-
-  if (gameMatrix[line][column] === 4) {
-    document.getElementById(clickedCellId).style.color = '#06005e';
-  }
-
-  if (gameMatrix[line][column] === 5) {
-    document.getElementById(clickedCellId).style.color = '#913a00';
-  }
-
-  if (gameMatrix[line][column] === 6) {
-    document.getElementById(clickedCellId).style.color = '#008a88';
-  }
-
-  if (gameMatrix[line][column] === 7) {
-    document.getElementById(clickedCellId).style.color = 'black';
-  }
-
-  if (gameMatrix[line][column] === 8) {
-    document.getElementById(clickedCellId).style.color = 'gray';
-  }
+  document.getElementById(clickedCellId).style.color = cellColors[gameMatrix[line][column]];
 }
